@@ -172,7 +172,7 @@ public class Consulta extends JFrame{
             f.setExistencia(false);
         }
         
-        if (fd.create(f)){
+        if (fd.update(f)){
             JOptionPane.showMessageDialog(null, "Filtro Modificado con exito");
             limpiarCampos();
             llenarTabla();
@@ -187,7 +187,24 @@ public class Consulta extends JFrame{
         
     });
     
-    
+      eliminar.addActionListener( new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        FiltroDao fd = new FiltroDao();
+        
+        
+        if (fd.delete(codigo.getText())){
+            JOptionPane.showMessageDialog(null, "Filtro eliminado con exito");
+            limpiarCampos();
+            llenarTabla();
+        }else {
+            JOptionPane.showMessageDialog(null, "Ocurrio un problema, contacte al administrador");
+        }
+        
+        
+        }
+ 
+    });
     
     }
     
