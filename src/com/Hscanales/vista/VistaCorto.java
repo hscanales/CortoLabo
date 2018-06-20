@@ -8,6 +8,8 @@ package com.Hscanales.vista;
 import com.Hscanales.dao.PeliculaDao;
 import com.Hscanales.modelo.Pelicula;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -71,23 +73,65 @@ public class VistaCorto extends JFrame {
         lblDirector = new JLabel("Director");
         lblPais = new JLabel("Pais");
         lblClasificacion = new JLabel("Clasificacion");
-        lblAnio = new JLabel("Anio");
+        lblAnio = new JLabel("Año");
         lblenProyeccion = new JLabel("En proyeccion: ");
-        
+
         lblNombre.setBounds(10, 10, ANCHOC, ALTOC);
         lblDirector.setBounds(10, 60, ANCHOC, ALTOC);
         lblPais.setBounds(10, 100, ANCHOC, ALTOC);
-        lblClasificacion.setBounds(120, 10, ANCHOC, ALTOC);
-        lblAnio.setBounds(120, 60, ANCHOC, ALTOC);
-        lblenProyeccion.setBounds(120, 100, ANCHOC, ALTOC);
-        
-        
-        
-        
+        lblClasificacion.setBounds(200, 10, ANCHOC, ALTOC);
+        lblAnio.setBounds(280, 60, ANCHOC, ALTOC);
+        lblenProyeccion.setBounds(320, 100, ANCHOC, ALTOC);
+
     }
 
     private void formulario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        nombre = new JTextField();
+        director = new JTextField();
+        pais = new JTextField();
+        anio = new JTextField();
+        clasificacion = new JComboBox();
+        si = new JRadioButton("si", true);
+        no = new JRadioButton("no", false);
+        resultados = new JTable();
+        buscar = new JButton("Buscar");
+        insertar = new JButton("Insertar");
+        eliminar = new JButton("Eliminar");
+        actualizar = new JButton("Actualizar");
+
+        table = new JPanel();
+
+        clasificacion.addItem("G");
+        clasificacion.addItem("PG");
+        clasificacion.addItem("14A");
+        clasificacion.addItem("18A");
+        clasificacion.addItem("R");
+        clasificacion.addItem("A");
+
+        proyeccion = new ButtonGroup();
+        proyeccion.add(si);
+        proyeccion.add(no);
+
+        nombre.setBounds(60, 10, ANCHOC, ALTOC);
+        director.setBounds(60, 60, ANCHOC, ALTOC);
+        pais.setBounds(60, 100, ANCHOC, ALTOC);
+        clasificacion.setBounds(320, 10, ANCHOC, ALTOC);
+        anio.setBounds(320, 60, ANCHOC, ALTOC);
+        
+        si.setBounds(440, 100, ANCHOC, ALTOC);
+        no.setBounds(460, 100, ANCHOC, ALTOC);
+
+        
+        buscar.setBounds(10, 210,  ANCHOC, ALTOC);
+        insertar.setBounds(120, 210,  ANCHOC, ALTOC);
+        eliminar.setBounds(240, 210,  ANCHOC, ALTOC);
+        actualizar.setBounds(360, 210,  ANCHOC, ALTOC);
+        
+        resultados = new JTable();
+        table.setBounds(10,250,700,300);
+        table.add(new JScrollPane(resultados));
+        
+        
     }
 
     private void llenarTabla() {
@@ -104,9 +148,12 @@ public class VistaCorto extends JFrame {
                         return String.class;
                     case 5:
                         return Integer.class;
+                    case 6:
+                        return String.class;
                     default:
-                        return Boolean.class;
+                        return String.class;
                 }
+                
             }
         };
 
@@ -128,7 +175,84 @@ public class VistaCorto extends JFrame {
     }
 
     private void eventos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        insertar.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            PeliculaDao pd = new PeliculaDao();
+            Pelicula f = new Pelicula(nombre.getText(),director.getText(),pais.getText(),clasificacion.getSelectedItem().toString(),Integer.parseInt(anio.getText()),true);
+            
+            if(no.isSelected()){
+                f.setEnProyeccion(false);
+            }
+            if(pd.create(f)){
+                JOptionPane.showMessageDialog(null, "Pelicula registrada con exito");
+                limpiarCampos();
+                llenarTabla();
+            }else{
+                JOptionPane.showMessageDialog(null, "JAJA se mamo");
+            }
+            
+            }    
+        });
+
+        actualizar.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            PeliculaDao pd = new PeliculaDao();
+            Pelicula f = new Pelicula(nombre.getText(),director.getText(),pais.getText(),clasificacion.getSelectedItem().toString(),Integer.parseInt(anio.getText()),true);
+            
+            if(no.isSelected()){
+                f.setEnProyeccion(false);
+            }
+            if(pd.update(f)){
+                JOptionPane.showMessageDialog(null, "Pelicula actualizada con exito");
+                limpiarCampos();
+                llenarTabla();
+            }else{
+                JOptionPane.showMessageDialog(null, "JAJA se mamo :( ");
+            }
+            
+            }    
+        });
+
+        buscar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PeliculaDao pd = new PeliculaDao();
+                Pelicula f = pd.read(nombre.getText());
+                if ( f ==null){
+                    JOptionPane.showMessageDialog(null, "This are not the jedi you are lookin for");
+                }else{
+                    nombre.setText(f.getNombre());
+                    director.setText(f.getDirector());
+                    pais.setText(f.getPais());
+                    clasificacion.setSelectedItem(f.getClasificacion());
+                    anio.setText(Integer.toString(f.getAnio()));
+                    if(f.isEnProyeccion()){
+                        si.setSelected(true);
+                    }else{
+                        no.setSelected(true);
+                    }
+                }
+            
+            }
+            
+        });
+        
+        
+        
     }
 
+    
+            private void limpiarCampos() {
+            nombre.setText("");
+            director.setText("");
+            pais.setText("");
+            clasificacion.setSelectedItem("R");
+            anio.setText("");
+            
+            }
+
+ 
 }

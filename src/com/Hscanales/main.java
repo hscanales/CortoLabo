@@ -6,6 +6,7 @@
 package com.Hscanales;
 
 import com.Hscanales.vista.Consulta;
+import com.Hscanales.vista.VistaCorto;
 
 /**
  *
@@ -21,7 +22,7 @@ public class main {
     java.awt.EventQueue.invokeLater(new Runnable(){
             @Override
             public void run() {
-            new Consulta().setVisible(true);
+            new VistaCorto().setVisible(true);
             }
     });
 
