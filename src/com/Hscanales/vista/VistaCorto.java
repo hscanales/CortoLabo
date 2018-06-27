@@ -102,7 +102,7 @@ public class VistaCorto extends JFrame {
         table = new JPanel();
 
         clasificacion.addItem("G");
-        clasificacion.addItem("PG");
+        clasificacion.addItem("PG-13");
         clasificacion.addItem("14A");
         clasificacion.addItem("18A");
         clasificacion.addItem("R");
@@ -119,7 +119,7 @@ public class VistaCorto extends JFrame {
         anio.setBounds(320, 60, ANCHOC, ALTOC);
         
         si.setBounds(440, 100, ANCHOC, ALTOC);
-        no.setBounds(460, 100, ANCHOC, ALTOC);
+        no.setBounds(490, 100, ANCHOC, ALTOC);
 
         
         buscar.setBounds(10, 210,  ANCHOC, ALTOC);
@@ -138,6 +138,8 @@ public class VistaCorto extends JFrame {
         tm = new DefaultTableModel() {
             public Class<?> getColumnClass(int column) {
                 switch (column) {
+                    case 0:
+                        return String.class;
                     case 1:
                         return String.class;
                     case 2:
@@ -146,10 +148,8 @@ public class VistaCorto extends JFrame {
                         return String.class;
                     case 4:
                         return String.class;
-                    case 5:
-                        return String.class;
                     default:
-                        return String.class;
+                        return Boolean.class;
                 }
                 
             }
