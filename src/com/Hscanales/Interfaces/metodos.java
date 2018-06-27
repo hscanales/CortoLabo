@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author estudiante
+ *  @author hscanales <00136317@uca.edu.sv>
  */
 public interface metodos<Generic> {
     public boolean create(Generic g);

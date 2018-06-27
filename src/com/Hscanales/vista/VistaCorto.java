@@ -16,7 +16,7 @@ import javax.swing.table.*;
 
 /**
  *
- * @author LN710Q
+ *  @author hscanales <00136317@uca.edu.sv>
  */
 public class VistaCorto extends JFrame {
 

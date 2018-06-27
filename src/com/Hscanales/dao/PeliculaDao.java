@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author LN710Q
+ *  @author hscanales <00136317@uca.edu.sv>
  */
 public class PeliculaDao implements metodos<Pelicula> {
 

@@ -7,7 +7,7 @@ package com.Hscanales.modelo;
 
 /**
  *
- * @author LN710Q
+ *  @author hscanales <00136317@uca.edu.sv>
  */
 public class Pelicula {
     private int id; //1

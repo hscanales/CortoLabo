@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author estudiante
+ * @author hscanales <00136317@uca.edu.sv>
  */
 public class Conexion {
 
