@@ -7,7 +7,6 @@ package com.Hscanales.dao;
 
 import com.Hscanales.Interfaces.metodos;
 import com.Hscanales.conexion.Conexion;
-import com.Hscanales.modelo.Filtro;
 import com.Hscanales.modelo.Pelicula;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

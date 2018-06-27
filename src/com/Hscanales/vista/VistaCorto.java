@@ -38,7 +38,7 @@ public class VistaCorto extends JFrame {
     DefaultTableModel tm;
 
     public VistaCorto() {
-        super("Peliculas v0.1");
+        super("Peliculas v1.0");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         agregarLabels();
