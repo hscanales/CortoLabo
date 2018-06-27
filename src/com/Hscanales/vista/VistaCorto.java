@@ -147,8 +147,6 @@ public class VistaCorto extends JFrame {
                     case 4:
                         return String.class;
                     case 5:
-                        return Integer.class;
-                    case 6:
                         return String.class;
                     default:
                         return String.class;
@@ -169,7 +167,7 @@ public class VistaCorto extends JFrame {
         ArrayList<Pelicula> peliculas = pd.readAll();
 
         for (Pelicula pi : peliculas) {
-            tm.addRow(new Object[]{pi.getNombre(), pi.getDirector(), pi.getPais(), pi.getClasificacion(), pi.getAnio(), pi.isEnProyeccion()});
+            tm.addRow(new Object[]{pi.getNombre(), pi.getDirector(), pi.getPais(), pi.getClasificacion(), pi.getAnio(),  pi.isEnProyeccion()});
         }
         resultados.setModel(tm);
     }
@@ -196,24 +194,24 @@ public class VistaCorto extends JFrame {
             }    
         });
 
-        actualizar.addActionListener( new ActionListener() {
+        actualizar.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
-            PeliculaDao pd = new PeliculaDao();
-            Pelicula f = new Pelicula(nombre.getText(),director.getText(),pais.getText(),clasificacion.getSelectedItem().toString(),Integer.parseInt(anio.getText()),true);
-            
-            if(no.isSelected()){
-                f.setEnProyeccion(false);
+            public void actionPerformed(ActionEvent e){
+                PeliculaDao fd = new PeliculaDao();
+                Pelicula f = new Pelicula(nombre.getText(), director.getText(), pais.getText(), clasificacion.getSelectedItem().toString(),Integer.parseInt(anio.getText()), true);
+                
+                if (no.isSelected()){
+                    f.setEnProyeccion(false);
+                }
+                
+                if(fd.update(f)){
+                    JOptionPane.showMessageDialog(null, "Pelicula Modificada con exito");
+                    limpiarCampos();
+                    llenarTabla();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de modificar la pelicula");
+                }
             }
-            if(pd.update(f)){
-                JOptionPane.showMessageDialog(null, "Pelicula actualizada con exito");
-                limpiarCampos();
-                llenarTabla();
-            }else{
-                JOptionPane.showMessageDialog(null, "JAJA se mamo :( ");
-            }
-            
-            }    
         });
 
         buscar.addActionListener(new ActionListener(){
@@ -240,7 +238,19 @@ public class VistaCorto extends JFrame {
             
         });
         
-        
+                eliminar.addActionListener(new ActionListener() {
+            @Override 
+            public void actionPerformed(ActionEvent e){
+                PeliculaDao fd = new PeliculaDao();
+                if (fd.delete(nombre.getText())){
+                JOptionPane.showMessageDialog(null, "Pelicula Eliminada con exito");
+                limpiarCampos();
+                llenarTabla();
+            }else{
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de eliminar la pelicula");
+                }
+            }
+        });
         
     }
 

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class PeliculaDao implements metodos<Pelicula> {
 
     private static final String SQL_INSERT = "INSERT INTO movie (nombre, director, pais, clasificacion, anio, en_proyeccion) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE movie SET en_proyecion=? where nombre=?";
+    private static final String SQL_UPDATE = "UPDATE movie SET director = ?,pais = ?,clasificacion = ?,anio= ?, en_proyeccion=? WHERE nombre=?";
     private static final String SQL_DELETE = "DELETE FROM movie WHERE nombre=?";
     private static final String SQL_READ = "SELECT * FROM movie WHERE nombre=?";
     private static final String SQL_READALL = "SELECT * FROM movie";
@@ -80,13 +80,12 @@ public class PeliculaDao implements metodos<Pelicula> {
         try {
             System.out.println(c.getNombre());
             ps = con.getCnx().prepareStatement(SQL_UPDATE);
-            ps.setString(1, c.getNombre());
-            ps.setString(2, c.getDirector());
-            ps.setString(3, c.getPais());
-            ps.setString(4, c.getClasificacion());
-            ps.setInt(5, c.getAnio());
-            ps.setBoolean(6, c.isEnProyeccion());
-
+            ps.setString(1, c.getDirector());
+            ps.setString(2, c.getPais());
+            ps.setString(3, c.getClasificacion());
+            ps.setInt(4, c.getAnio());
+            ps.setBoolean(5, c.isEnProyeccion());
+            ps.setString(6,c.getNombre());
             if (ps.executeUpdate() > 0) {
                 return true;
             }
